@@ -1,4 +1,4 @@
-from debug import broken_loop, broken_nested
+from debug import broken_loop, broken_digit_count
 
 TEST_SUITE_NAME = "Debug Tests"
 
@@ -11,7 +11,9 @@ def test_broken_loop():
     assert broken_loop(0, -1) == ""
 
 
-def test_broken_nested():
-    """broken_nested - builds a string of numbers from 00 to 19"""
-    expected = "00-01-02-03-04-05-06-07-08-09-10-11-12-13-14-15-16-17-18-19"
-    assert broken_nested() == expected
+def test_broken_digit_count():
+    """broken_digit_count - counts the digit characters in a string"""
+    assert broken_digit_count("R2-D2") == 2
+    assert broken_digit_count("2026-10-13") == 8
+    assert broken_digit_count("no digits here") == 0
+    assert broken_digit_count("") == 0

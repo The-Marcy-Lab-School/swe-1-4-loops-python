@@ -2,7 +2,7 @@
 
 Practice repeating work with `for` and `while`, and with `range()`.
 
-**Practicing:** for loops, while loops, `range()`, `continue`, nested loops
+**Practicing:** for loops, while loops, `range()`, `continue`, looping over a string
 
 - [AI Use on This Assignment](#ai-use-on-this-assignment)
 - [Setup](#setup)
@@ -21,7 +21,7 @@ Practice repeating work with `for` and `while`, and with `range()`.
   - [Question 10: `continue_guard_clause`](#question-10-continue_guard_clause)
 - [Debug](#debug)
   - [Question 11: `broken_loop`](#question-11-broken_loop)
-  - [Question 12: `broken_nested`](#question-12-broken_nested)
+  - [Question 12: `broken_digit_count`](#question-12-broken_digit_count)
 - [Submitting](#submitting)
 - [Good luck!](#good-luck)
 
@@ -261,17 +261,20 @@ broken_loop(0, -1)   # want ""
 Both problems are in the `range()` call. Note the last two cases: a range that
 covers one number, and a range that covers none.
 
-### Question 12: `broken_nested`
+### Question 12: `broken_digit_count`
 
-`broken_nested` should build `"00-01-02-...-18-19"`, joining each outer number
-to each inner one. It returns doubled digits instead.
+`broken_digit_count(text)` should return how many characters in `text` are
+digits. It currently crashes with an `AttributeError` instead.
 
 ```python
-broken_nested()   # want "00-01-02-03-04-05-06-07-08-09-10-11-...-19"
+broken_digit_count("R2-D2")        # want 2
+broken_digit_count("2026-10-13")   # want 8
+broken_digit_count("no digits")    # want 0
 ```
 
-Look closely at the two loop variables. What happens to the outer one while
-the inner loop is running?
+The loop variable is named `character`, but a name does not decide what a
+variable holds. Print `character` inside the loop. What does it actually hold,
+and where do those values come from?
 
 ## Submitting
 

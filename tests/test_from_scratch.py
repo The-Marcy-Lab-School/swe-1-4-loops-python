@@ -1,4 +1,6 @@
+import ast
 import inspect
+import textwrap
 
 from from_scratch import (
     count_vowels,
@@ -12,6 +14,22 @@ from from_scratch import (
 )
 
 TEST_SUITE_NAME = "From Scratch Tests"
+
+
+def code_used_in(func):
+    """The kinds of code a function uses, and the names of the functions it calls.
+
+    The function's code is read with Python's ast module rather than searched as
+    text, so words in comments and strings never count. A comment that says
+    "no if check needed" does not count as an if statement.
+    """
+    source = textwrap.dedent(inspect.getsource(func))
+    kinds = set()
+    for node in ast.walk(ast.parse(source)):
+        kinds.add(type(node).__name__)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            kinds.add(node.func.id + "()")
+    return kinds
 
 
 def printed(capsys):
@@ -38,9 +56,9 @@ def test_loop_even_numbers_up_to_10(capsys):
 
 def test_loop_even_numbers_up_to_10_no_if(capsys):
     """loop_even_numbers_up_to_10 - does not rely on an if check or continue keyword"""
-    source = inspect.getsource(loop_even_numbers_up_to_10)
-    assert "if" not in source
-    assert "continue" not in source
+    used = code_used_in(loop_even_numbers_up_to_10)
+    assert "If" not in used, "Count by 2 instead of checking each number with an if statement."
+    assert "Continue" not in used
 
     loop_even_numbers_up_to_10()  # repeated to keep the test from auto-passing
     assert printed(capsys) == ["0", "2", "4", "6", "8"]
@@ -115,6 +133,6 @@ def test_halving_steps():
 
 def test_halving_steps_uses_while():
     """halving_steps - uses a while loop, since the count is not known up front"""
-    source = inspect.getsource(halving_steps)
-    assert "while" in source, "The number of halvings is not known in advance."
-    assert "range(" not in source
+    used = code_used_in(halving_steps)
+    assert "While" in used, "The number of halvings is not known in advance."
+    assert "range()" not in used
