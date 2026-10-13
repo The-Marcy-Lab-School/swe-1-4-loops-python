@@ -55,23 +55,40 @@ You own every line either way, and you will be asked to explain it.
 
 ## Setup
 
-Work in `development/mod-1`. Make a draft branch before you start.
+Clone your repository in `development/mod-1` and then `cd` into it. Set up
+your virtual environment and make a draft branch before you start.
 
 ```sh
+git clone [your_repo]
+cd [your_repo]
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 git checkout -b draft
 ```
 
-Run `pytest` for everything, or `pytest -k fizzbuzz` for one question. Every
-push runs the tests on GitHub and reports your score in the **Actions** tab.
+Run `pytest` to test the entire assignment, or `pytest -k fizzbuzz` for one
+question. Every push runs the tests on GitHub and reports your score in the
+**Actions** tab.
 
 75% of tests passing counts as complete. Submit at that point even if it is
 not perfect. Treat submitting as a checkpoint rather than a finish line, and
 come back to improve it.
 
+When you are done working on this assignment, turn off your virtual
+environment by running:
+
+```sh
+deactivate
+```
+
 ## Before You Start
+
+This assignment has three sections:
+
+1. From Scratch
+2. Modify
+3. Debug
 
 You will see a *lot* of similar loops in these problems. You may want to copy
 and paste, and *ordinarily* that is fine. Not here. We want you to build some
@@ -84,20 +101,6 @@ confuses you, do what the *test* says. Remember that **inclusive** means
 "include the number" and **exclusive** means "do NOT include the number". So
 inclusive 1 to exclusive 5 is 1, 2, 3, 4. Exclusive 5 to inclusive 10 is 6, 7,
 8, 9, 10.
-
-Python has no C-style `for (let i = 0; i < 10; i++)`. You use `range()`
-instead, which takes up to three numbers: where to start, where to stop, and
-what to count by.
-
-```python
-range(5)          # 0, 1, 2, 3, 4
-range(2, 5)       # 2, 3, 4
-range(0, 10, 2)   # 0, 2, 4, 6, 8
-range(5, 0, -1)   # 5, 4, 3, 2, 1
-```
-
-**The stop value is never included**, which is `range()` being exclusive at
-the end. That catches everyone once. To finish on 10, you stop at 11.
 
 Most of these questions **print** rather than return. The tests read what you
 printed, so a returned value will not count.
@@ -167,9 +170,9 @@ fizz
 ...
 ```
 
-Order matters here. If you check 3 before checking both, 15 never prints
-`"fizzbuzz"`. This question comes up in real interviews more than it has any
-right to, so it's worth getting comfortable with. Don't overthink it!
+Hint: be careful about the order that you check these in! This question comes
+up in real interviews more than it has any right to, so it's worth getting
+comfortable with. Don't overthink it!
 
 ### Question 7: `count_vowels`
 
@@ -190,8 +193,7 @@ count_vowels("AEIOU")
 
 A `for` loop works on any **iterable**, which is anything Python can hand you
 one item at a time. A string is one, so this is the first question here that
-loops over something other than a `range()`. Keep a
-count as you go and return it once the loop is finished.
+loops over something other than a `range()`.
 
 Recall: `include_y` needs a default value, because the tests call this with
 only a word.
@@ -214,9 +216,8 @@ Work through `8` by hand: 8 becomes 4, then 2, then 1, then 0.5. That is four
 halvings, and the fourth is the one that took it under 1.
 
 You cannot write this with `range()`, because you do not know how many
-halvings it will take until you start. That is the question a `while` loop
-answers: keep going while something is still true. The tests check you used
-one.
+halvings it will take until you start. Which kind of loop keeps going while
+something is still true? The tests check you used one.
 
 A `while` loop is also the only one here that can become an **infinite loop**,
 which is a loop whose condition never turns false. If your terminal sits there

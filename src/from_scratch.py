@@ -1,31 +1,31 @@
 def loop_0_up_to_10():
-    pass
+    return None
 
 
 def loop_5_to_10():
-    pass
+    return None
 
 
 # you do NOT need an if check
 def loop_even_numbers_up_to_10():
-    pass
+    return None
 
 
 def countdown_5_to_0():
-    pass
+    return None
 
 
 def loop_up_to_num(num):
-    pass
+    return None
 
 
 def fizzbuzz():
-    pass
+    return None
 
 
 def count_vowels(word, include_y=False):
-    pass
+    return None
 
 
 def halving_steps(number):
-    pass
+    return None
