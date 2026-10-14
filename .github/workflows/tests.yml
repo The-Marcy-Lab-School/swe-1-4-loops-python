@@ -27,7 +27,7 @@ jobs:
       # TEMPLATE is rewritten per assignment when the template repo is made.
       - name: Restore the assignment's tests
         env:
-          TEMPLATE: The-Marcy-Lab-School/swe-1-3-loops-python
+          TEMPLATE: The-Marcy-Lab-School/swe-1-4-loops-python
         run: |
           git clone --depth 1 --quiet "https://github.com/$TEMPLATE.git" /tmp/canonical
           rm -rf tests
