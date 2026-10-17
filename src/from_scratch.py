@@ -29,3 +29,7 @@ def count_vowels(word, include_y=False):
 
 def halving_steps(number):
     return None
+
+
+def ask_for_pin():
+    return None

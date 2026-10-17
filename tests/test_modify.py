@@ -2,7 +2,7 @@ import ast
 import inspect
 import textwrap
 
-from modify import continue_guard_clause, while_to_for
+from modify import while_to_for
 
 TEST_SUITE_NAME = "Modify Tests"
 
@@ -43,20 +43,3 @@ def test_while_to_for_output(capsys):
     while_to_for()
     assert printed(capsys) == ["0", "1", "2", "3", "4"]
 
-
-def test_continue_guard_clause_uses_continue():
-    """continue_guard_clause - uses a continue statement"""
-    assert "Continue" in code_used_in(continue_guard_clause)
-
-
-def test_continue_guard_clause_output(capsys):
-    """continue_guard_clause - it prints 1 to 5 (exclusive), skipping 2 and 3"""
-    assert "Continue" in code_used_in(continue_guard_clause)
-
-    continue_guard_clause()
-    assert printed(capsys) == [
-        "Sure glad this isn\'t 2 or 3",
-        "1",
-        "Sure glad this isn\'t 2 or 3",
-        "4",
-    ]

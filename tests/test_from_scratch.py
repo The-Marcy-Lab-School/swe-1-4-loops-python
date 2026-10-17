@@ -1,4 +1,5 @@
 import ast
+import builtins
 import inspect
 import textwrap
 
@@ -11,6 +12,7 @@ from from_scratch import (
     loop_even_numbers_up_to_10,
     loop_up_to_num,
     halving_steps,
+    ask_for_pin,
 )
 
 TEST_SUITE_NAME = "From Scratch Tests"
@@ -34,6 +36,12 @@ def code_used_in(func):
 
 def printed(capsys):
     return [line for line in capsys.readouterr().out.splitlines() if line.strip()]
+
+
+def feed(monkeypatch, answers):
+    """Stand in for a person typing, one answer per input() call."""
+    supply = iter(answers)
+    monkeypatch.setattr(builtins, "input", lambda *a: next(supply))
 
 
 def test_loop_0_up_to_10(capsys):
@@ -136,3 +144,30 @@ def test_halving_steps_uses_while():
     used = code_used_in(halving_steps)
     assert "While" in used, "The number of halvings is not known in advance."
     assert "range()" not in used
+
+
+def test_ask_for_pin_accepts_four_digits(monkeypatch):
+    """ask_for_pin - returns the first answer that is exactly four digits"""
+    feed(monkeypatch, ["4021"])
+    assert ask_for_pin() == "4021"
+
+
+def test_ask_for_pin_asks_again(monkeypatch, capsys):
+    """ask_for_pin - keeps asking, and says why each answer was rejected"""
+    feed(monkeypatch, ["12", "abcd", "12345", " 0420 "])
+    assert ask_for_pin() == "0420"
+    assert printed(capsys) == [
+        "Sorry, 12 is not a 4-digit PIN",
+        "Sorry, abcd is not a 4-digit PIN",
+        "Sorry, 12345 is not a 4-digit PIN",
+    ]
+
+
+def test_ask_for_pin_uses_break(monkeypatch):
+    """ask_for_pin - uses a while loop that ends with break"""
+    used = code_used_in(ask_for_pin)
+    assert "While" in used
+    assert "Break" in used, "Ask the question in one place, inside a while True loop, and break out once the PIN is valid."
+
+    feed(monkeypatch, ["9", "1234"])  # repeated to keep the test from auto-passing
+    assert ask_for_pin() == "1234"

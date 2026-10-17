@@ -2,7 +2,7 @@
 
 Practice repeating work with `for` and `while`, and with `range()`.
 
-**Practicing:** for loops, while loops, `range()`, `continue`, looping over a string
+**Practicing:** for loops, while loops, `range()`, `break`, `continue`, looping over a string
 
 - [AI Use on This Assignment](#ai-use-on-this-assignment)
 - [Setup](#setup)
@@ -16,12 +16,14 @@ Practice repeating work with `for` and `while`, and with `range()`.
   - [Question 6: `fizzbuzz`](#question-6-fizzbuzz)
   - [Question 7: `count_vowels`](#question-7-count_vowels)
   - [Question 8: `halving_steps`](#question-8-halving_steps)
+  - [Question 9: `ask_for_pin`](#question-9-ask_for_pin)
 - [Modify](#modify)
-  - [Question 9: `while_to_for`](#question-9-while_to_for)
-  - [Question 10: `continue_guard_clause`](#question-10-continue_guard_clause)
+  - [Question 10: `while_to_for`](#question-10-while_to_for)
 - [Debug](#debug)
   - [Question 11: `broken_loop`](#question-11-broken_loop)
   - [Question 12: `broken_digit_count`](#question-12-broken_digit_count)
+  - [Question 13: `broken_letter_count`](#question-13-broken_letter_count)
+  - [Question 14: `broken_score_total`](#question-14-broken_score_total)
 - [Submitting](#submitting)
 - [Good luck!](#good-luck)
 
@@ -90,14 +92,14 @@ This assignment has three sections:
 2. Modify
 3. Debug
 
-You will see a *lot* of similar loops in these problems. You may want to copy
-and paste, and *ordinarily* that is fine. Not here. We want you to build some
+You will see a _lot_ of similar loops in these problems. You may want to copy
+and paste, and _ordinarily_ that is fine. Not here. We want you to build some
 muscle memory with `for` loops, so please write each "from scratch" question
 out by hand. Loops turn up in a huge number of algorithm challenges, and we
 want you to get so good at writing them it is literally boring.
 
 Also, READ THE TESTS CAREFULLY, the limits are exact. If a description
-confuses you, do what the *test* says. Remember that **inclusive** means
+confuses you, do what the _test_ says. Remember that **inclusive** means
 "include the number" and **exclusive** means "do NOT include the number". So
 inclusive 1 to exclusive 5 is 1, 2, 3, 4. Exclusive 5 to inclusive 10 is 6, 7,
 8, 9, 10.
@@ -124,11 +126,11 @@ finish on 10?
 
 ### Question 3: `loop_even_numbers_up_to_10`
 
-Write a `for` loop that starts on 0 and prints each *even* number up to, but
+Write a `for` loop that starts on 0 and prints each _even_ number up to, but
 not including, 10. What should you count by?
 
 - 0 counts as an even number here
-- an `if` check with `continue` would *technically* work, but it is overkill.
+- an `if` check with `continue` would _technically_ work, but it is overkill.
   Is there a simpler way? The tests confirm you did not use either
 
 ### Question 4: `countdown_5_to_0`
@@ -224,25 +226,31 @@ which is a loop whose condition never turns false. If your terminal sits there
 doing nothing, press `Ctrl + C` to stop it, then check that something inside
 the loop actually changes the value the condition tests.
 
+### Question 9: `ask_for_pin`
+
+Write a function `ask_for_pin` that asks the user for a 4-digit PIN with `input()` and keeps asking until the answer is exactly four digits. Clean each answer with `strip()` before you check it. After each answer that is not four digits, print a message that names the answer, then ask again. Once the answer is valid, return it. Here is what it should look like when you call `ask_for_pin()`
+
+```text
+Enter a 4-digit PIN: 12
+Sorry, 12 is not a 4-digit PIN
+Enter a 4-digit PIN: abcd
+Sorry, abcd is not a 4-digit PIN
+Enter a 4-digit PIN: 0420
+```
+
+Note: Here `ask_for_pin()` returns `"0420"`. Return the PIN as a string, because `int("0420")` is `420`, and a PIN that loses its leading zero is a different PIN.
+
+Note: The tests type the answers for you, one answer for each call to `input()`. If a test fails with `StopIteration`, your function asked for more answers than the test typed, which usually means that the loop did not stop on a valid PIN.
+
 ## Modify
 
-Change the two functions already in `src/modify.py`.
+Change the function already in `src/modify.py`.
 
-### Question 9: `while_to_for`
+### Question 10: `while_to_for`
 
 Rewrite `while_to_for` as a `for` loop with `range()`. It currently prints 0
 to 4 using a `while` loop and a counter it has to increment by hand. The
 output stays exactly the same, and the tests check the `while` is gone.
-
-### Question 10: `continue_guard_clause`
-
-Add a guard clause to `continue_guard_clause` so that 2 and 3 are skipped
-entirely, printing nothing at all for them. It currently prints a message and
-a number for 1 through 4.
-
-A **guard clause** here is an `if` that runs `continue`. `continue` abandons
-the current trip through the loop and starts the next one, skipping the rest
-of the body. The tests check you used it.
 
 ## Debug
 
@@ -275,6 +283,36 @@ broken_digit_count("no digits")    # want 0
 The loop variable is named `character`, but a name does not decide what a
 variable holds. Print `character` inside the loop. What does it actually hold,
 and where do those values come from?
+
+### Question 13: `broken_letter_count`
+
+`broken_letter_count(text, letter)` should return how many times `letter` appears in `text`. It currently returns 0 or 1 whatever the text is, and it crashes with an `UnboundLocalError` when `text` is empty.
+
+```python
+broken_letter_count("banana", "a")   # want 3, gets 1
+broken_letter_count("banana", "n")   # want 2, gets 0
+broken_letter_count("", "a")         # want 0, crashes
+```
+
+Print `count` at the end of every pass through the loop for `broken_letter_count("banana", "a")`. When does it go back to 0? Then think about the empty string: how many times does the loop body run, and which lines inside it never run?
+
+### Question 14: `broken_score_total`
+
+`broken_score_total()` should ask for quiz scores until the user types `done`, then return the total of the scores. When the user types something that is not a whole number, such as `ten`, the function should print `Sorry, ten is not a score` and ask again. It currently crashes with a `ValueError` instead, because `int()` cannot convert the word `ten` into a number.
+
+```text
+Enter a quiz score, or done to finish: 90
+Enter a quiz score, or done to finish: ten
+Sorry, ten is not a score
+Enter a quiz score, or done to finish: 85
+Enter a quiz score, or done to finish: done
+```
+
+Here `broken_score_total()` should return `175`.
+
+Fix it with a guard clause. A **guard clause** here is an `if` that runs `continue`. `continue` abandons the current trip through the loop and starts the next one, skipping the rest of the body, so `int(score)` never receives an answer it cannot convert, and the loop goes straight back to asking. The tests check you used it.
+
+As in Question 9, the tests type the answers for you, one answer for each call to `input()`.
 
 ## Submitting
 
