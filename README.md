@@ -203,7 +203,7 @@ only a word.
 ### Question 8: `halving_steps`
 
 Write a function `halving_steps` that takes a number and returns how many
-times you can halve it before it drops below 1.
+times it takes to cut it in half and get it below 1.
 
 ```python
 halving_steps(8)
